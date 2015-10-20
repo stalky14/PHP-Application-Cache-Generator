@@ -14,6 +14,9 @@ $dirlength = strlen($dir)+1;
 
 printFiles($dir,$dirlength);
 
+echo "NETWORK: \n";
+echo "* \n\n";
+
 function printFiles($dir,$rootlength)
 {
     $files = array_diff(scandir($dir), array('.', '..'));
@@ -24,9 +27,10 @@ function printFiles($dir,$rootlength)
 
 function printFile($file,$rootlength)
 {
+  if(substr($file,$rootlength) !== substr(__FILE__,$rootlength)) {
     echo substr($file,$rootlength)."\n";
     echo "#".md5_file($file)."\n";
+  }
 }
 
 ob_flush();
-
