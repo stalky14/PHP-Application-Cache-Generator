@@ -12,6 +12,10 @@ $dirlength = strlen($dir)+1;
 // This is the length of the site root from the manifest file.
 // This part of the path and the proceeding / (reason for the +1) must be removed to give relative link to file.
 
+// Global Variables
+$excludedExt = [];
+$excludedDirs = ["subdir"];
+
 printFiles($dir,$dirlength);
 
 echo "NETWORK: \n";
