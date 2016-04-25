@@ -23,18 +23,23 @@ echo "* \n\n";
 
 function printFiles($dir,$rootlength)
 {
-    $files = array_diff(scandir($dir), array('.', '..'));
-    foreach ($files as $file) {
-        (is_dir("$dir/$file")) ? printFiles("$dir/$file",$rootlength) : printFile("$dir/$file",$rootlength);
+    global $excludedDirs;
+    if(!in_array(substr($dir,$rootLength), $excludedDirs)) {
+       $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? printFiles("$dir/$file",$rootlength) : printFile("$dir/$file",$rootlength);
+        } 
     }
 }
 
 function printFile($file,$rootlength)
 {
+  global $excludedExt;
   if(substr($file,$rootlength) !== substr(__FILE__,$rootlength)) {
-    echo substr($file,$rootlength)."\n";
-    echo "#".md5_file($file)."\n";
+      if(!in_array(pathinfo($file, PATHINFO_EXTENSION), $excludedExt)) {
+          echo substr($file,$rootlength)."\n";
+          echo "#".md5_file($file)."\n";
+      }
   }
 }
-
 ob_flush();
